@@ -9,8 +9,12 @@
             font-size: 1.5rem;
             color: #dc3545;
             margin-top: 1rem;
+            text-align: center; /* 添加此行以使文字居中 */
         }
         @media (max-width: 576px) {
+            h1 {
+                text-align: center;
+            }
             .medicine-reminder {
                 font-size: 1.25rem;
             }
@@ -38,7 +42,7 @@
 
             const pillsToTakeToday = calculatePillsToTake(startDateStr, pattern);
 
-            document.getElementById('medicineReminder').innerText = `今天您需要服用${pillsToTakeToday}粒药物。`;
+            document.getElementById('medicineReminder').innerText = `今天您需要服用${pillsToTakeToday}粒药物`;
         }
 
         function setupRefresh() {
@@ -46,7 +50,7 @@
                 displayReminder(); // 每隔一定时间就重新执行显示提醒信息的函数
             }, 60 * 1000); // 每60秒刷新一次（可根据需求调整）
         }
-        
+
         // 页面加载完成后显示提醒信息
         window.onload = function () {
             displayReminder();
