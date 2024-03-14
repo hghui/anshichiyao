@@ -5,7 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/J5f9jVx8z2nzk6JwYKEsKouFpzO8LUEhRIBacFfnzT" crossorigin="anonymous">
     <title>每日服药提醒</title>
-    <style>        .medicine-reminder {
+    <style>        
+        .watermark::before {
+            content: attr(data-text);
+            display: block;
+            position: absolute;
+            color: rgba(204, 204, 204, 0.3 + Math.random() * 0.4); /* 随机透明度 */
+            font-size: 1.5em + Math.random() * 1.5em; /* 随机大小 */
+            filter: blur(1px); /* 文字模糊处理 */
+            opacity: 0.09; /* 基础透明度 */
+            z-index: -1;
+            transform: rotate(-10deg + Math.random() * 20deg); /* 随机旋转角度 */
+        }
+        .medicine-reminder {
             font-size: 1.5rem;
             color: #dc3545;
             margin-top: 1rem;
@@ -23,6 +35,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-JqSIxuKIEasXu6TLSSwUpK7I/T+pPcLtBcWUg/LnglDIUNvKeS+xzguM/RHd" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></script>
     <script>
+
         function calculatePillsToTake(startDate, pattern) {
             const today = new Date();
             const startDay = new Date(startDate);
@@ -55,6 +68,28 @@
         window.onload = function () {
             displayReminder();
             setupRefresh(); // 页面加载完成后启动定时刷新功能
+            // 添加水印逻辑
+            const watermarkTexts = ['HGHui', 'ZYan', 'H&Z','HGHui', 'ZYan', 'H&Z','HGHui', 'ZYan', 'H&Z','HGHui', 'ZYan', 'H&Z','HGHui', 'ZYan', 'H&Z','HGHui', 'ZYan', 'H&Z']; // 水印文本数组
+            const minSize = 1; // 水印最小字体大小（em）
+            const maxSize = 2; // 水印最大字体大小（em）
+            const numWatermarks = watermarkTexts.length; // 随机生成的水印数量
+
+            for (let i = 0; i < numWatermarks; i++) {
+                const randomFontSize = Math.floor(Math.random() * (maxSize - minSize + 1)) + minSize;
+                const randomTop = Math.random() * 100 + '%';
+                const randomLeft = Math.random() * 100 + '%';
+                const randomRotate = Math.floor(Math.random() * 360); // 旋转角度范围：0-359度
+
+                const watermarkDiv = document.createElement('div');
+                watermarkDiv.classList.add('watermark');
+                watermarkDiv.style.fontSize = `${randomFontSize}em`;
+                watermarkDiv.style.top = randomTop;
+                watermarkDiv.style.left = randomLeft;
+                watermarkDiv.style.transform = `rotate(${randomRotate}deg)`;
+                watermarkDiv.setAttribute('data-text', watermarkTexts[Math.floor(Math.random() * watermarkTexts.length)]);
+
+                document.body.appendChild(watermarkDiv);
+            }
         }
     </script>
 </head>
